@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matsue Kosen – Global Activities Homepage</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌏</text></svg>"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <style>
+    .hero {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 60% 40%, #0d2c4e 0%, #060f1e 55%, #040810 100%);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-stars {
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 80%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 70% 35%, rgba(255,255,255,.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,.7) 0%, transparent 100%),
+        radial-gradient(2px 2px at 90% 15%, rgba(255,255,255,.8) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 77% 72%, rgba(255,255,255,.7) 0%, transparent 100%);
+    }
+    .hero-glow { position:absolute; width:600px; height:600px; background:radial-gradient(circle,rgba(30,100,180,.35) 0%,transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); animation:pulse 4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)} }
+    .globe-container { position:relative; display:flex; align-items:center; justify-content:center; width:280px; height:280px; margin:0 auto 2rem; }
+    .globe-img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
+    .globe-ring { position:absolute; inset:-12px; border-radius:50%; border:2px solid rgba(91,197,224,.3); animation:spin-slow 20s linear infinite; }
+    .globe-ring-2 { position:absolute; inset:-24px; border-radius:50%; border:1px solid rgba(91,197,224,.15); animation:spin-slow 30s linear infinite reverse; }
+    @keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .hero-badge { display:inline-block; background:rgba(91,197,224,.15); border:1px solid rgba(91,197,224,.4); color:#5bc5e0; font-size:.72rem; letter-spacing:.13em; font-weight:700; padding:6px 18px; border-radius:999px; margin-bottom:1rem; text-transform:uppercase; }
+    .hero-cta { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#1a6fa0,#2b9cbf); color:#fff; padding:13px 30px; border-radius:10px; font-weight:700; transition:transform .2s,box-shadow .2s; }
+    .hero-cta:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(27,111,160,.5); }
+    .scroll-down { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.4); animation:bounce 2s infinite; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+    .news-card { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,.07); transition:transform .2s,box-shadow .2s; }
+    .news-card:hover { transform:translateY(-4px); box-shadow:0 10px 36px rgba(0,0,0,.13); }
+    .news-placeholder { background:linear-gradient(135deg,#f0f5fa,#e8eef5); border:2px dashed #c5d8e8; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; height:220px; color:#96b3c8; }
+    .event-card-home { background:#fff; border-radius:16px; padding:1.5rem; box-shadow:0 2px 16px rgba(0,0,0,.07); border-top:4px solid; transition:transform .2s,box-shadow .2s; }
+    .event-card-home:hover { transform:translateY(-4px); box-shadow:0 10px 36px rgba(0,0,0,.12); }
+    .connect-card { background:linear-gradient(135deg,#eaf4fb,#f5f9fd); border-left:4px solid #1e8fb5; border-radius:14px; padding:2rem; }
+    @media(max-width:768px){ .globe-container{width:200px;height:200px;} }
+  </style>
+</head>
+<body class="bg-white" data-page="home">
+
+<div id="navbar-placeholder"></div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-stars"></div>
+  <div class="hero-glow"></div>
+  <div class="relative z-10 text-center px-4 max-w-3xl mx-auto pt-16">
+    <div class="globe-container">
+      <div class="globe-ring"></div>
+      <div class="globe-ring-2"></div>
+      <img src="https://sspark.genspark.ai/cfimages?u1=dbdQXjjk%2B4dMuLOmB0Y6tvtXOiKPoqMy23yR7Gigp1ta7XPX1U9hVOd752yPcnmaTtjLDCQO1XW1rCoBau3WNLImljeu1mAUsYXwLY1ZgwbE&u2=KgUrAoDT0%2FNOq8Qv&width=2560"
+           alt="Globe" class="globe-img"/>
+    </div>
+    <div class="hero-badge"><i class="fas fa-star mr-1"></i> Matsue Kosen &nbsp;·&nbsp; Shimane, Japan</div>
+    <h1 class="text-4xl md:text-5xl font-black text-white mb-2 leading-tight">Hello World! 👋</h1>
+    <p class="text-xl font-semibold mb-1" style="color:#5bc5e0;">Welcome to Matsue Kosen Global Activities Homepage</p>
+    <p class="text-white text-lg font-semibold mb-3">Honing Global Engineers, from Matsue to the World!</p>
+    <p class="text-sm italic mb-6" style="color:#8fb3cc;">"Exploring exciting opportunities for international exchange and growth in engineering education"</p>
+    <a href="pages/global-engineer-project.html" class="hero-cta"><i class="fas fa-rocket"></i> Explore Our Programs</a>
+  </div>
+  <div class="scroll-down"><i class="fas fa-chevron-down text-2xl"></i></div>
+</section>
+
+<!-- GLOBAL ENGINEER PROJECT -->
+<div id="project" class="section-bar" style="cursor:pointer" onclick="location.href='pages/global-engineer-project.html'">
+  <h2>Global Engineer Development Project</h2>
+</div>
+<section class="bg-white py-16 px-4 reveal">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <div class="flex-1">
+      <span class="inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-4"><i class="fas fa-graduation-cap mr-1"></i> Academic Program</span>
+      <h3 class="text-2xl font-bold text-gray-800 mb-4">Shaping the Engineers of Tomorrow</h3>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The <strong>Global Engineer Development Project</strong> at Matsue College aims to develop internationally capable engineers equipped with technical expertise, cross-cultural understanding, and a strong SDGs mindset.
+      </p>
+      <div class="flex flex-wrap gap-3 mb-6">
+        <span class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm border border-blue-100"><i class="fas fa-language mr-1"></i> Language Proficiency</span>
+        <span class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm border border-blue-100"><i class="fas fa-globe mr-1"></i> Cross-Cultural Understanding</span>
+        <span class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm border border-blue-100"><i class="fas fa-microchip mr-1"></i> Technical Expertise</span>
+      </div>
+      <a href="pages/global-engineer-project.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-700 to-cyan-600 text-white px-6 py-3 rounded-full font-bold text-sm hover:shadow-lg transition-all">
+        Learn more <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+    <div class="flex-shrink-0 w-full md:w-64">
+      <div class="bg-gradient-to-br from-blue-900 via-blue-700 to-cyan-500 p-8 rounded-2xl text-center relative overflow-hidden shadow-xl">
+        <div class="relative z-10">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 border-2 border-cyan-300 flex items-center justify-center">
+            <i class="fas fa-globe-americas text-3xl text-cyan-200"></i>
+          </div>
+          <p class="text-cyan-200 font-bold text-sm uppercase tracking-wider">Global Engineer</p>
+          <p class="text-white font-extrabold text-lg uppercase tracking-wider">Development</p>
+          <p class="text-cyan-300 font-bold text-sm uppercase tracking-wider">Project</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST NEWS -->
+<div id="news" class="section-bar" style="cursor:pointer" onclick="location.href='pages/news/index.html'">
+  <h2>Latest News</h2>
+</div>
+<section class="bg-white py-14 px-4 reveal">
+  <div class="max-w-5xl mx-auto">
+    <article class="news-card flex flex-col md:flex-row overflow-hidden mb-10 shadow-lg">
+      <div class="md:w-72 flex-shrink-0 overflow-hidden bg-gray-100">
+        <img src="https://sspark.genspark.ai/cfimages?u1=MXTd4eYOJq1dikf0Tes9%2Bso6Kab5Vrjdjmw9%2Bn4TwcnjSSVkV%2FKjOc9IMmhawrF6xrMR6kta9I6a6rmh%2FtyxX3uLnHAsugi35MFVnO1PHxkt0taTDrkbgAzZ&u2=I%2BiFAyn4LJHQV7a4&width=2560"
+          alt="Halloween Party 2024" class="w-full h-full object-cover" style="min-height:200px;"/>
+      </div>
+      <div class="p-8 flex flex-col justify-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-blue-500 mb-2"><i class="fas fa-calendar-alt mr-1"></i> October 2024 · Global Commons</span>
+        <h3 class="text-2xl font-bold text-blue-600 mb-3">2024 Halloween Party 🎃</h3>
+        <p class="text-gray-700 leading-relaxed">Students had the opportunity to learn about the origin of Halloween and its fascinating history. They were also able to carve their own Jack-o'-lanterns! 🎃</p>
+        <a href="pages/news/index.html" class="mt-5 inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-800 transition-colors">Read more <i class="fas fa-arrow-right text-xs"></i></a>
+      </div>
+    </article>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="news-placeholder gap-3"><i class="fas fa-newspaper text-3xl"></i><p class="font-semibold text-sm">Coming Soon</p></div>
+      <div class="news-placeholder gap-3"><i class="fas fa-photo-video text-3xl"></i><p class="font-semibold text-sm">Coming Soon</p></div>
+      <div class="news-placeholder gap-3"><i class="fas fa-globe text-3xl"></i><p class="font-semibold text-sm">Coming Soon</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<div id="events" class="section-bar" style="cursor:pointer" onclick="location.href='pages/events/index.html'">
+  <h2>Events</h2>
+</div>
+<section class="bg-gray-50 py-16 px-4 reveal">
+  <div class="max-w-5xl mx-auto">
+    <p class="text-center text-gray-500 mb-10 text-sm">Upcoming and recent activities at Matsue Kosen Global Commons</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="event-card-home" style="border-top-color:#1565a0;">
+        <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-4"><i class="fas fa-globe text-blue-600 text-xl"></i></div>
+        <span class="text-xs font-bold text-blue-500 uppercase tracking-wider">Upcoming</span>
+        <h4 class="font-bold text-gray-800 mt-1 mb-2">International Exchange Program</h4>
+        <p class="text-sm text-gray-500">Details to be announced. Students will participate in cultural and academic exchange.</p>
+      </div>
+      <div class="event-card-home" style="border-top-color:#0891b2;">
+        <div class="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center mb-4"><i class="fas fa-users text-cyan-600 text-xl"></i></div>
+        <span class="text-xs font-bold text-cyan-500 uppercase tracking-wider">Upcoming</span>
+        <h4 class="font-bold text-gray-800 mt-1 mb-2">Cross-Cultural Workshop</h4>
+        <p class="text-sm text-gray-500">An interactive workshop to develop cross-cultural communication skills.</p>
+      </div>
+      <div class="event-card-home" style="border-top-color:#059669;">
+        <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center mb-4"><i class="fas fa-language text-green-600 text-xl"></i></div>
+        <span class="text-xs font-bold text-green-500 uppercase tracking-wider">Upcoming</span>
+        <h4 class="font-bold text-gray-800 mt-1 mb-2">Language Proficiency Seminar</h4>
+        <p class="text-sm text-gray-500">Help students improve TOEIC scores and engineering English vocabulary.</p>
+      </div>
+    </div>
+    <div class="text-center mt-8">
+      <a href="pages/events/index.html" class="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-800 transition-colors">See all events <i class="fas fa-arrow-right text-xs"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact" class="section-bar"><h2>Contact Us</h2></div>
+<section class="bg-white py-16 px-4 reveal">
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="flex items-start gap-6">
+      <div class="w-16 h-16 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 flex items-center justify-center shadow-md">
+        <i class="fas fa-university text-blue-700 text-xl"></i>
+      </div>
+      <div>
+        <p class="text-blue-600 font-bold text-base mb-0.5">National Institute of Technology, Matsue College</p>
+        <p class="text-gray-500 text-xs mb-3">Established 1964 · Shimane Prefecture, Japan</p>
+        <div class="space-y-2 text-sm text-gray-600">
+          <p><i class="fas fa-map-marker-alt w-5 text-blue-500 mr-1"></i>Global Commons, Matsue College, Bldg 1, 3F</p>
+          <p><i class="fas fa-map-pin w-5 text-blue-500 mr-1"></i>14-4 Nishiikuma-cho, Matsue City, Shimane Prefecture, 690-8518</p>
+          <p><i class="fas fa-phone w-5 text-blue-500 mr-1"></i>TEL +81 (0)852-36-5150</p>
+          <p><i class="fas fa-fax w-5 text-blue-500 mr-1"></i>FAX +81 (0)852-36-5119</p>
+        </div>
+      </div>
+    </div>
+    <div class="connect-card text-center">
+      <h3 class="text-xl font-extrabold text-blue-600 uppercase tracking-wider mb-4">
+        <i class="fas fa-paper-plane mr-2"></i>Connect With Us Today
+      </h3>
+      <p class="text-gray-600 mb-5">Have a question or comment? We're excited to hear from you!</p>
+      <a href="mailto:global@matsue-ct.jp" class="contact-btn"><i class="fas fa-envelope mr-2"></i>Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="assets/js/components.js"></script>
+<script>
+  // Smooth scroll for same-page anchors only
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var href = a.getAttribute('href');
+      if (href === '#') return;
+      var target = document.querySelector(href);
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
