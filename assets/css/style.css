@@ -1,0 +1,117 @@
+/* ============================================================
+   style.css  —  Shared styles for Matsue Kosen Global Site
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; }
+* { font-family: 'Inter', sans-serif; }
+body { margin: 0; padding: 0; }
+a { text-decoration: none; }
+img { max-width: 100%; }
+
+/* ── Navbar ── */
+.navbar {
+  background: rgba(10,20,40,0.88);
+  backdrop-filter: blur(14px);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  transition: background 0.3s;
+}
+.navbar.scrolled { background: rgba(10,20,40,0.98); }
+.nav-link { color: #cdd8e8; transition: color 0.2s; font-size: 0.875rem; letter-spacing: 0.02em; }
+.nav-link:hover { color: #5bc5e0; }
+.nav-link.active { color: #fff; font-weight: 600; border-bottom: 2px solid #5bc5e0; padding-bottom: 2px; }
+#mobile-menu { display: none; }
+#mobile-menu.open { display: block; }
+
+/* ── Page hero (used on sub-pages) ── */
+.page-hero {
+  min-height: 38vh;
+  background: linear-gradient(135deg, #040d1a 0%, #062040 45%, #0a2a50 75%, #04121f 100%);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(91,197,224,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,197,224,.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-blob-1 {
+  position: absolute; width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(21,101,160,.4) 0%, transparent 70%);
+  top: -100px; right: -60px;
+}
+.hero-blob-2 {
+  position: absolute; width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(30,143,181,.25) 0%, transparent 70%);
+  bottom: -60px; left: -40px;
+}
+
+/* ── Section bar (divider with title) ── */
+.section-bar { background: linear-gradient(90deg, #1565a0, #1e8fb5); padding: 18px 0; text-align: center; }
+.section-bar h2 { color: #fff; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin: 0; }
+
+/* ── Cards ── */
+.news-card {
+  background: #fff; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,.07);
+  transition: transform .2s, box-shadow .2s;
+}
+.news-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(0,0,0,.13); }
+
+.event-card {
+  background: #fff; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,.07);
+  transition: transform .2s, box-shadow .2s;
+}
+.event-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(0,0,0,.13); }
+
+.country-card {
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.07);
+  border-top: 4px solid;
+  transition: transform .2s, box-shadow .2s; cursor: pointer;
+}
+.country-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,.12); }
+
+/* ── Featured card (news / event highlight) ── */
+.featured-card {
+  background: #fff; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0,0,0,.1);
+  display: flex; flex-direction: column;
+}
+@media (min-width: 768px) { .featured-card { flex-direction: row; } }
+
+/* ── Tags ── */
+.program-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .7rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 999px; margin: 2px; border: 1px solid;
+}
+.event-tag {
+  display: inline-block; font-size: .68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid;
+}
+
+/* ── Contact button ── */
+.contact-btn {
+  background: linear-gradient(135deg, #1565a0, #1e8fb5);
+  color: #fff; padding: 11px 30px; border-radius: 9px; font-weight: 700;
+  font-size: .95rem; display: inline-block; transition: transform .2s, box-shadow .2s;
+  text-decoration: none; cursor: pointer; border: none;
+}
+.contact-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30,143,181,.4); }
+
+/* ── Scroll reveal animation ── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Utility ── */
+.text-gradient-blue {
+  background: linear-gradient(90deg, #5bc5e0, #1e8fb5);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
