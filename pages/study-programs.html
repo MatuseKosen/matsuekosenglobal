@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Programs Abroad – Matsue Kosen</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌏</text></svg>"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    #map-wrap { position:relative; background:linear-gradient(160deg,#e8f4fc,#f0f8ff,#e4eff8); border-radius:24px; overflow:hidden; box-shadow:0 4px 40px rgba(21,101,160,.12); border:1px solid rgba(21,101,160,.1); }
+    #world-map { width:100%; height:auto; display:block; }
+    .country-default { fill:#d4e4f0; stroke:#b8cfe0; stroke-width:0.4px; transition:fill .2s; }
+    .country-default:hover { fill:#c0d8ea; }
+    .country-program { fill:#4db8e8; stroke:#1e8fb5; stroke-width:0.7px; cursor:pointer; filter:drop-shadow(0 1px 3px rgba(30,143,181,.35)); transition:fill .2s,filter .2s; }
+    .country-program:hover { fill:#1a9fd4; filter:drop-shadow(0 2px 8px rgba(21,101,160,.55)); }
+    .country-program.active { fill:#0e7bb5; filter:drop-shadow(0 3px 12px rgba(21,101,160,.7)); }
+    .country-home { fill:#ff7043; stroke:#e64a19; stroke-width:0.7px; filter:drop-shadow(0 1px 4px rgba(230,74,25,.4)); }
+    #map-tooltip { position:absolute; pointer-events:none; background:rgba(8,18,36,.92); backdrop-filter:blur(8px); border:1px solid rgba(91,197,224,.35); border-radius:10px; padding:8px 14px; color:#fff; font-size:.8rem; font-weight:600; white-space:nowrap; opacity:0; transform:translateY(-4px); transition:opacity .15s,transform .15s; z-index:20; }
+    #map-tooltip.visible { opacity:1; transform:translateY(0); }
+    .tt-tag { display:inline-block; background:rgba(91,197,224,.2); border:1px solid rgba(91,197,224,.4); border-radius:999px; font-size:.65rem; padding:1px 8px; margin-left:8px; color:#5bc5e0; font-weight:700; text-transform:uppercase; }
+    #info-panel { position:absolute; top:16px; right:16px; width:300px; background:rgba(255,255,255,.97); border-radius:18px; box-shadow:0 8px 40px rgba(21,101,160,.18); border:1px solid rgba(30,143,181,.15); overflow:hidden; opacity:0; transform:translateX(20px) scale(.97); transition:opacity .3s,transform .3s; z-index:30; pointer-events:none; }
+    #info-panel.visible { opacity:1; transform:translateX(0) scale(1); pointer-events:auto; }
+    .panel-header { background:linear-gradient(135deg,#1565a0,#1e8fb5); padding:14px 16px; color:#fff; }
+    .panel-body { padding:14px 16px 16px; }
+    .institute-row { display:flex; align-items:flex-start; gap:8px; padding:8px 0; border-bottom:1px solid #f0f5fa; }
+    .institute-row:last-child { border-bottom:none; }
+    .inst-icon { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.9rem; background:#eff8ff; }
+    #close-panel { position:absolute; top:10px; right:10px; width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,.2); border:none; color:#fff; cursor:pointer; font-size:.7rem; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+    #close-panel:hover { background:rgba(255,255,255,.35); }
+    .legend-dot { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
+    @media(max-width:768px){ #info-panel{position:fixed;top:auto;bottom:0;right:0;left:0;width:100%;border-radius:18px 18px 0 0;transform:translateY(20px);} #info-panel.visible{transform:translateY(0);} }
+  </style>
+</head>
+<body class="bg-gray-50" data-page="study">
+
+<div id="navbar-placeholder"></div>
+
+<!-- HERO -->
+<section class="page-hero pt-16">
+  <div class="hero-grid"></div>
+  <div class="hero-blob-1"></div>
+  <div class="hero-blob-2"></div>
+  <div class="relative z-10 text-center px-4 max-w-3xl mx-auto py-16">
+    <div class="inline-flex items-center gap-2 bg-blue-400/10 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-widest px-5 py-2 rounded-full mb-6">
+      <i class="fas fa-plane-departure"></i> International Exchange
+    </div>
+    <h1 class="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
+      Study Programs<br/>
+      <span class="text-gradient-blue">Abroad</span>
+    </h1>
+    <p class="text-blue-200 text-lg max-w-xl mx-auto leading-relaxed">
+      Explore our partner institutions across 8 countries. Click a highlighted country to discover programs and partner universities.
+    </p>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="py-12 px-4 bg-white reveal" id="map-section">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div class="flex flex-wrap items-center gap-5">
+        <div class="flex items-center gap-2"><div class="legend-dot" style="background:#4db8e8;border:1.5px solid #1e8fb5;"></div><span class="text-sm text-gray-600 font-medium">Partner country — click for details</span></div>
+        <div class="flex items-center gap-2"><div class="legend-dot" style="background:#ff7043;border:1.5px solid #e64a19;"></div><span class="text-sm text-gray-600 font-medium">Japan (Matsue Kosen)</span></div>
+        <div class="flex items-center gap-2"><div class="legend-dot" style="background:#d4e4f0;border:1.5px solid #b8cfe0;"></div><span class="text-sm text-gray-600 font-medium">Other countries</span></div>
+      </div>
+      <div class="flex items-center gap-2 text-blue-500 text-sm font-medium">
+        <i class="fas fa-hand-pointer"></i><span>Hover to name · Click to explore</span>
+      </div>
+    </div>
+    <div id="map-wrap" class="w-full">
+      <svg id="world-map" viewBox="0 0 960 500" xmlns="http://www.w3.org/2000/svg"><g id="countries-group"></g></svg>
+      <div id="map-tooltip"><span id="tt-flag"></span><span id="tt-name"></span><span class="tt-tag" id="tt-tag" style="display:none">Program</span></div>
+      <div id="info-panel">
+        <div class="panel-header relative">
+          <button id="close-panel"><i class="fas fa-times"></i></button>
+          <div class="flex items-center gap-3">
+            <div id="panel-flag" class="text-3xl leading-none"></div>
+            <div><div id="panel-country" class="font-black text-lg leading-tight"></div><div id="panel-subtitle" class="text-blue-200 text-xs mt-0.5"></div></div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div id="panel-tags" class="flex flex-wrap mb-3"></div>
+          <div id="panel-desc" class="text-gray-600 text-sm leading-relaxed mb-4"></div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Partner Institutions</div>
+          <div id="panel-institutes"></div>
+          <div id="panel-cta" class="mt-4 pt-3 border-t border-gray-100"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM CARDS -->
+<div class="section-bar"><h2>All Study Programs</h2></div>
+<section class="py-14 px-4 bg-gray-50 reveal">
+  <div class="max-w-6xl mx-auto">
+    <p class="text-center text-gray-500 mb-10">Click any card to jump to the country on the map above</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="program-cards"></div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="../assets/js/components.js"></script>
+<script src="../assets/js/study-programs.js"></script>
+</body>
+</html>

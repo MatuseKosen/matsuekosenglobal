@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events – Matsue Kosen Global Activities</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌏</text></svg>"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../../assets/css/style.css"/>
+</head>
+<body class="bg-gray-50" data-page="events">
+
+<div id="navbar-placeholder"></div>
+
+<!-- HERO -->
+<section class="page-hero pt-16">
+  <div class="hero-grid"></div>
+  <div class="hero-blob-1"></div>
+  <div class="hero-blob-2"></div>
+  <div class="relative z-10 text-center px-4 max-w-2xl mx-auto py-14">
+    <div class="inline-flex items-center gap-2 bg-blue-400/10 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-widest px-5 py-2 rounded-full mb-5">
+      <i class="fas fa-calendar-alt"></i> Activities & Events
+    </div>
+    <h1 class="text-4xl md:text-5xl font-black text-white mb-3 leading-tight">Events</h1>
+    <p class="text-blue-200 text-base max-w-lg mx-auto leading-relaxed">
+      Past highlights and upcoming activities organized by the Matsue Kosen Global Commons team.
+    </p>
+  </div>
+</section>
+
+<!-- FEATURED EVENT -->
+<section class="py-12 px-4 bg-white">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-1 h-8 rounded-full" style="background:linear-gradient(180deg,#1565a0,#1e8fb5)"></div>
+      <h2 class="text-xl font-extrabold text-gray-800 uppercase tracking-wider">Highlight</h2>
+    </div>
+    <article class="featured-card reveal" id="featured-event"></article>
+  </div>
+</section>
+
+<!-- ALL EVENTS -->
+<div class="section-bar"><h2>All Events</h2></div>
+<section class="py-12 px-4 bg-gray-50">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="events-grid"></div>
+    <p class="text-center text-gray-400 text-sm mt-10">
+      <i class="fas fa-clock mr-1"></i> More events will be announced — stay tuned!
+    </p>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="../../assets/js/components.js"></script>
+<script src="../../assets/js/events.js"></script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Global Engineer Development Project – Matsue Kosen</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌏</text></svg>"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+
+    /* ── Pillar cards ── */
+    .pillar-card {
+      border-radius: 20px; overflow: hidden; position: relative;
+      transition: transform .3s, box-shadow .3s;
+      cursor: default;
+    }
+    .pillar-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(0,0,0,.18); }
+    .pillar-number { font-size: 5rem; font-weight: 900; line-height: 1; opacity: .08; position: absolute; top: 8px; right: 16px; }
+
+    /* ── KPI counter ── */
+    .kpi-card { border-radius: 16px; background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,.07); transition: transform .3s, box-shadow .3s; overflow: hidden; }
+    .kpi-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.12); }
+    .kpi-bar-track { background: #e8f0f5; border-radius: 999px; overflow: hidden; height: 8px; }
+    .kpi-bar-fill { height: 8px; border-radius: 999px; background: linear-gradient(90deg,#1565a0,#1e8fb5); transition: width 1.5s cubic-bezier(.4,0,.2,1); }
+
+    /* ── Timeline ── */
+    .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom,#1565a0,#1e8fb5,#5bc5e0); transform: translateX(-50%); }
+    .timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: #1e8fb5; border: 3px solid #fff; box-shadow: 0 0 0 3px rgba(30,143,181,.3); flex-shrink: 0; }
+    .timeline-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 16px rgba(0,0,0,.08); border-left: 4px solid #1e8fb5; transition: transform .2s, box-shadow .2s; }
+    .timeline-card:hover { transform: translateX(4px); box-shadow: 0 6px 28px rgba(0,0,0,.13); }
+
+    /* ── Partner cards ── */
+    .partner-card { background: #fff; border-radius: 14px; padding: 1.25rem; box-shadow: 0 2px 14px rgba(0,0,0,.07); transition: transform .2s, box-shadow .2s; display: flex; align-items: center; gap: 12px; border-left: 4px solid transparent; }
+    .partner-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+
+    /* ── Curriculum table ── */
+    .curr-cell { padding: 10px 8px; border: 1px solid #e0ecf4; font-size: .75rem; text-align: center; }
+    .curr-header { background: linear-gradient(135deg,#1565a0,#1e8fb5); color: #fff; font-weight: 700; }
+    .curr-new { background: rgba(30,143,181,.12); color: #1565a0; font-weight: 600; }
+    .curr-existing { background: #f8fbfd; }
+
+    /* ── Section decoration ── */
+    .section-line { width: 60px; height: 4px; background: linear-gradient(90deg,#1565a0,#1e8fb5); border-radius: 2px; margin: 0 auto 1rem; }
+
+    @media(max-width:768px){
+      .timeline-line { left: 20px; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50" data-page="project">
+
+<!-- ── Navbar (injected by components.js) ── -->
+<div id="navbar-placeholder"></div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero pt-20">
+  <div class="hero-grid"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto py-20">
+    <div class="hero-badge">
+      <i class="fas fa-seedling"></i> SDGs × Engineering × Global
+    </div>
+    <h1 class="text-4xl md:text-6xl font-black text-white leading-tight mb-4">
+      Global Engineer<br/>
+      <span style="background:linear-gradient(90deg,#5bc5e0,#1e8fb5,#1565a0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+        Development Project
+      </span>
+    </h1>
+    <p class="text-blue-200 text-lg md:text-xl font-medium mb-3">
+      Developing Global Engineers with an SDGs Mindset
+    </p>
+    <p class="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed mb-8">
+      Developing engineers who understand that <em>"the world is connected, and each of us is a starting point"</em> —
+      from Shimane to the world, equipped with technical expertise, language proficiency, and an SDGs mindset.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#pillars" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-700 to-cyan-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all">
+        <i class="fas fa-layer-group"></i> Explore the 3 Pillars
+      </a>
+      <a href="#goals" class="inline-flex items-center gap-2 border border-blue-400/40 text-blue-200 px-6 py-3 rounded-full font-semibold hover:bg-blue-400/10 transition-all">
+        <i class="fas fa-chart-line"></i> View Goals &amp; Metrics
+      </a>
+    </div>
+  </div>
+  <div class="relative z-10 pb-8 text-blue-400/50 animate-bounce">
+    <i class="fas fa-chevron-down text-xl"></i>
+  </div>
+</section>
+
+<!-- ══════════ INTRO PHILOSOPHY ══════════ -->
+<section class="bg-white py-16 px-4 reveal" id="philosophy">
+  <div class="max-w-5xl mx-auto text-center">
+    <div class="section-line"></div>
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Core Philosophy</h2>
+    <p class="text-gray-500 max-w-3xl mx-auto text-lg leading-relaxed mb-12">
+      The essence of the Sustainable Development Goals (SDGs) is that
+      <strong class="text-blue-700">"the world is connected, and each one of us is a starting point."</strong>
+      Matsue Kosen embraces this to cultivate internationally capable engineers
+      — from Shimane to the world 🌍
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
+        <div class="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center mx-auto mb-4 shadow-md">
+          <i class="fas fa-book-open text-white text-xl"></i>
+        </div>
+        <h3 class="font-bold text-gray-800 mb-2">Engineering + English</h3>
+        <p class="text-gray-500 text-sm">Technical knowledge taught and expressed in English across all grade levels</p>
+      </div>
+      <div class="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-2xl p-6 border border-cyan-100">
+        <div class="w-14 h-14 rounded-2xl bg-cyan-600 flex items-center justify-center mx-auto mb-4 shadow-md">
+          <i class="fas fa-globe text-white text-xl"></i>
+        </div>
+        <h3 class="font-bold text-gray-800 mb-2">International Experience</h3>
+        <p class="text-gray-500 text-sm">Real overseas programs, exchanges, and partnerships across 8+ countries</p>
+      </div>
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-md">
+          <i class="fas fa-leaf text-white text-xl"></i>
+        </div>
+        <h3 class="font-bold text-gray-800 mb-2">SDGs Research</h3>
+        <p class="text-gray-500 text-sm">Graduating research aligned with global sustainability goals, presented internationally</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3 PILLARS ══════════ -->
+<section id="pillars" class="py-20 px-4 bg-gray-50 reveal">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14">
+      <div class="section-line"></div>
+      <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-3">Three Pillars of Education</h2>
+      <p class="text-gray-500 text-lg">Three-Pillar Approach — OUR GOALS</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Pillar 1 -->
+      <div class="pillar-card bg-gradient-to-br from-blue-700 to-blue-900 text-white p-8 shadow-xl">
+        <div class="pillar-number">①</div>
+        <div class="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center mb-6 border border-white/20">
+          <i class="fas fa-book text-3xl text-blue-200"></i>
+        </div>
+        <div class="text-blue-300 text-xs font-bold uppercase tracking-widest mb-2">Initiative ①</div>
+        <h3 class="text-xl font-black mb-1">SDGs &amp; Engineering</h3>
+        <h3 class="text-xl font-black mb-4 text-blue-200">Foundation Learning</h3>
+        <p class="text-xs text-blue-200 font-semibold mb-4">SDGs &amp; Engineering Foundation Learning</p>
+        <ul class="space-y-3 text-sm text-blue-100">
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-cyan-300 mt-0.5 flex-shrink-0"></i><span><strong>Yrs 1–2:</strong> Practical English Communication 1–4</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-cyan-300 mt-0.5 flex-shrink-0"></i><span><strong>Yr 3 (New):</strong> Engineering English Foundation 1–2 (shapes, functions, PBL with SDGs)</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-cyan-300 mt-0.5 flex-shrink-0"></i><span><strong>Yr 4 (New):</strong> Specialized Engineering English in technical domains</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-cyan-300 mt-0.5 flex-shrink-0"></i><span>Global Commons as hub for international exchange on campus</span></li>
+        </ul>
+        <div class="mt-6 pt-4 border-t border-white/15">
+          <span class="text-xs text-blue-300">🎯 Target grades: Years 1–4</span>
+        </div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="pillar-card bg-gradient-to-br from-cyan-600 to-teal-700 text-white p-8 shadow-xl">
+        <div class="pillar-number">②</div>
+        <div class="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center mb-6 border border-white/20">
+          <i class="fas fa-plane-departure text-3xl text-cyan-200"></i>
+        </div>
+        <div class="text-cyan-200 text-xs font-bold uppercase tracking-widest mb-2">Initiative ②</div>
+        <h3 class="text-xl font-black mb-1">Overseas Experience</h3>
+        <h3 class="text-xl font-black mb-4 text-cyan-200">Learning</h3>
+        <p class="text-xs text-cyan-200 font-semibold mb-4">Overseas Experience Learning</p>
+        <ul class="space-y-3 text-sm text-cyan-100">
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-white mt-0.5 flex-shrink-0"></i><span>Study abroad &amp; international exchange programs</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-white mt-0.5 flex-shrink-0"></i><span><strong>Michigan (USA)</strong> &amp; <strong>Australia</strong> training programs</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-white mt-0.5 flex-shrink-0"></i><span>Partnerships with 8+ universities across Asia, Europe &amp; Americas</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-white mt-0.5 flex-shrink-0"></i><span>Cross-cultural communication skill development</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-white mt-0.5 flex-shrink-0"></i><span>Faculty English training (1.6× increase target)</span></li>
+        </ul>
+        <div class="mt-6 pt-4 border-t border-white/15">
+          <span class="text-xs text-cyan-200">🎯 Target: 21% → 53% overseas experience rate</span>
+        </div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="pillar-card bg-gradient-to-br from-emerald-600 to-green-800 text-white p-8 shadow-xl">
+        <div class="pillar-number">③</div>
+        <div class="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center mb-6 border border-white/20">
+          <i class="fas fa-microscope text-3xl text-green-200"></i>
+        </div>
+        <div class="text-green-200 text-xs font-bold uppercase tracking-widest mb-2">Initiative ③</div>
+        <h3 class="text-xl font-black mb-1">SDGs Graduation</h3>
+        <h3 class="text-xl font-black mb-4 text-green-200">&amp; Engineering Research</h3>
+        <p class="text-xs text-green-200 font-semibold mb-4">SDGs Graduation &amp; Engineering Research</p>
+        <ul class="space-y-3 text-sm text-green-100">
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-lime-300 mt-0.5 flex-shrink-0"></i><span><strong>Yr 5:</strong> SDGs graduation research — English titles, figures &amp; abstracts</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-lime-300 mt-0.5 flex-shrink-0"></i><span><strong>Advanced (New):</strong> Research English Presentation course</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-lime-300 mt-0.5 flex-shrink-0"></i><span>Publication in English peer-reviewed journals &amp; international conferences</span></li>
+          <li class="flex items-start gap-2"><i class="fas fa-check-circle text-lime-300 mt-0.5 flex-shrink-0"></i><span>Interaction with overseas researchers in English</span></li>
+        </ul>
+        <div class="mt-6 pt-4 border-t border-white/15">
+          <span class="text-xs text-green-200">🎯 Student papers: 10 → 100 per year</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ GOALS & KPIs ══════════ -->
+<section id="goals" class="py-20 px-4 bg-white reveal">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <div class="section-line"></div>
+      <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-3">Goals &amp; Performance Indicators</h2>
+      <p class="text-gray-500">Performance Indicators — Comparing FY2023 (Current) → FY2028 (Target)</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10" id="kpi-grid">
+
+      <!-- KPI 1: TOEIC -->
+      <div class="kpi-card p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-language text-white"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">TOEIC-IP Score (4th Year Students)</h4>
+            <p class="text-xs text-gray-400">TOEIC-IP Score (4th-year students)</p>
+          </div>
+        </div>
+        <div class="flex justify-between items-end mb-2">
+          <div class="text-center">
+            <div class="text-2xl font-black text-gray-400">369</div>
+            <div class="text-xs text-gray-400">2023 Current</div>
+          </div>
+          <div class="text-blue-400 text-xl"><i class="fas fa-arrow-right"></i></div>
+          <div class="text-center">
+            <div class="text-3xl font-black text-blue-600">500</div>
+            <div class="text-xs text-blue-500 font-semibold">2028 Target</div>
+          </div>
+        </div>
+        <div class="kpi-bar-track mt-3">
+          <div class="kpi-bar-fill" data-width="74" style="width:0%"></div>
+        </div>
+        <div class="text-right text-xs text-gray-400 mt-1">+131 points (+35.5%)</div>
+      </div>
+
+      <!-- KPI 2: Overseas Experience -->
+      <div class="kpi-card p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-cyan-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-plane text-white"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Students with Overseas Experience (4th Year)</h4>
+            <p class="text-xs text-gray-400">Students with Overseas Experience (4th-year)</p>
+          </div>
+        </div>
+        <div class="flex justify-between items-end mb-2">
+          <div class="text-center">
+            <div class="text-2xl font-black text-gray-400">21%</div>
+            <div class="text-xs text-gray-400">2023 Current</div>
+          </div>
+          <div class="text-cyan-400 text-xl"><i class="fas fa-arrow-right"></i></div>
+          <div class="text-center">
+            <div class="text-3xl font-black text-cyan-600">53%</div>
+            <div class="text-xs text-cyan-500 font-semibold">2028 Target</div>
+          </div>
+        </div>
+        <div class="kpi-bar-track mt-3">
+          <div class="kpi-bar-fill" style="background:linear-gradient(90deg,#0891b2,#06b6d4); width:0%" data-width="53"></div>
+        </div>
+        <div class="text-right text-xs text-gray-400 mt-1">+32 percentage points (+152%)</div>
+      </div>
+
+      <!-- KPI 3: Student Papers -->
+      <div class="kpi-card p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-file-alt text-white"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Student International Papers / Year</h4>
+            <p class="text-xs text-gray-400">English peer-reviewed &amp; conference papers (students)</p>
+          </div>
+        </div>
+        <div class="flex justify-between items-end mb-2">
+          <div class="text-center">
+            <div class="text-2xl font-black text-gray-400">10</div>
+            <div class="text-xs text-gray-400">2023 Current</div>
+          </div>
+          <div class="text-emerald-400 text-xl"><i class="fas fa-arrow-right"></i></div>
+          <div class="text-center">
+            <div class="text-3xl font-black text-emerald-600">100</div>
+            <div class="text-xs text-emerald-500 font-semibold">2028 Target</div>
+          </div>
+        </div>
+        <div class="kpi-bar-track mt-3">
+          <div class="kpi-bar-fill" style="background:linear-gradient(90deg,#059669,#10b981); width:0%" data-width="10"></div>
+        </div>
+        <div class="text-right text-xs text-gray-400 mt-1">10× increase targeted</div>
+      </div>
+
+      <!-- KPI 4: Global Competency -->
+      <div class="kpi-card p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-violet-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-brain text-white"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Global Competency Score (4th Year)</h4>
+            <p class="text-xs text-gray-400">Global Competency Score (4th-year)</p>
+          </div>
+        </div>
+        <div class="flex justify-between items-end mb-2">
+          <div class="text-center">
+            <div class="text-2xl font-black text-gray-400">Baseline</div>
+            <div class="text-xs text-gray-400">Entry-level score</div>
+          </div>
+          <div class="text-violet-400 text-xl"><i class="fas fa-arrow-right"></i></div>
+          <div class="text-center">
+            <div class="text-3xl font-black text-violet-600">+10%</div>
+            <div class="text-xs text-violet-500 font-semibold">From Entry Score</div>
+          </div>
+        </div>
+        <div class="kpi-bar-track mt-3">
+          <div class="kpi-bar-fill" style="background:linear-gradient(90deg,#7c3aed,#a78bfa); width:0%" data-width="60"></div>
+        </div>
+        <div class="text-right text-xs text-gray-400 mt-1">Measured via Generic Skill Test</div>
+      </div>
+    </div>
+
+    <!-- Faculty KPI bar -->
+    <div class="bg-gradient-to-r from-blue-900 to-cyan-800 rounded-2xl p-6 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center border border-white/20">
+          <i class="fas fa-chalkboard-teacher text-2xl text-blue-200"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg">Faculty English Workload</h4>
+          <p class="text-blue-200 text-sm">Faculty English Workload Increase</p>
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl font-black text-cyan-300">1.6<span class="text-2xl">×</span></div>
+        <div class="text-blue-200 text-sm mt-1">increase target by 2028</div>
+      </div>
+      <div class="text-blue-100 text-sm max-w-xs">
+        Faculty are expected to conduct 1.6× more of their academic work in English — teaching, research, and administrative communication.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CURRICULUM MAP ══════════ -->
+<section class="py-20 px-4 bg-gray-50 reveal">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <div class="section-line"></div>
+      <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-3">Curriculum Overview</h2>
+      <p class="text-gray-500">Course progression from Year 1 (Regular Course) through Advanced Course</p>
+    </div>
+    <div class="overflow-x-auto rounded-2xl shadow-lg">
+      <table class="w-full border-collapse bg-white min-w-max">
+        <thead>
+          <tr>
+            <th class="curr-cell curr-header w-32">Grade / Year</th>
+            <th class="curr-cell curr-header">Initiative ① Foundation</th>
+            <th class="curr-cell curr-header">Initiative ② Overseas</th>
+            <th class="curr-cell curr-header">Initiative ③ Research</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="curr-cell font-bold text-blue-700 bg-blue-50">Year 1–2</td>
+            <td class="curr-cell curr-existing">Practical English Communication 1–4</td>
+            <td class="curr-cell curr-existing">Introduction to international exchange</td>
+            <td class="curr-cell text-gray-300">—</td>
+          </tr>
+          <tr>
+            <td class="curr-cell font-bold text-blue-700 bg-blue-50">Year 3</td>
+            <td class="curr-cell curr-new">🆕 Engineering English Foundation 1–2<br/><span class="text-gray-400 text-xs">(shapes, functions, PBL + SDGs)</span></td>
+            <td class="curr-cell curr-existing">Overseas short programs begin</td>
+            <td class="curr-cell text-gray-300">—</td>
+          </tr>
+          <tr>
+            <td class="curr-cell font-bold text-blue-700 bg-blue-50">Year 4</td>
+            <td class="curr-cell curr-new">🆕 Specialized Engineering English<br/><span class="text-gray-400 text-xs">(technical knowledge in English)</span></td>
+            <td class="curr-cell curr-existing">Exchange programs<br/><span class="text-gray-400 text-xs">Michigan / Australia training</span></td>
+            <td class="curr-cell text-gray-300">—</td>
+          </tr>
+          <tr>
+            <td class="curr-cell font-bold text-blue-700 bg-blue-50">Year 5</td>
+            <td class="curr-cell curr-existing">Advanced English communication</td>
+            <td class="curr-cell curr-existing">Partner university visits &amp; seminars</td>
+            <td class="curr-cell curr-new">🆕 SDGs Graduation Research<br/><span class="text-gray-400 text-xs">(English titles, abstracts, figures)</span></td>
+          </tr>
+          <tr>
+            <td class="curr-cell font-bold text-blue-700 bg-blue-50">Advanced Course<br/><span class="text-xs font-normal text-gray-400">Advanced Course</span></td>
+            <td class="curr-cell curr-existing">Peer support for junior students</td>
+            <td class="curr-cell curr-existing">International researcher exchange</td>
+            <td class="curr-cell curr-new">🆕 Research English Presentation<br/><span class="text-gray-400 text-xs">(journal papers &amp; conference talks)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-center text-xs text-gray-400 mt-4">
+      <span class="inline-block bg-blue-100 text-blue-700 px-2 py-1 rounded font-semibold mr-2">🆕 New</span>
+      = Newly established courses for this project
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ TIMELINE ══════════ -->
+<section id="timeline" class="py-20 px-4 bg-white reveal">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-14">
+      <div class="section-line"></div>
+      <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-3">Project Timeline</h2>
+      <p class="text-gray-500">From foundations to full global implementation (2019–2028)</p>
+    </div>
+
+    <!-- Desktop timeline -->
+    <div class="hidden md:block relative">
+      <div class="timeline-line"></div>
+      <div class="space-y-10">
+
+        <div class="flex items-center gap-8">
+          <div class="flex-1 text-right">
+            <div class="timeline-card p-4 inline-block text-left max-w-xs" style="border-left-color:#6b7280">
+              <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">2019</span>
+              <h4 class="font-bold text-gray-700 mt-1">GE Basic Foundation Project Adopted</h4>
+              <p class="text-sm text-gray-500">Foundations laid for global engineering programme</p>
+            </div>
+          </div>
+          <div class="timeline-dot flex-shrink-0 z-10" style="background:#6b7280"></div>
+          <div class="flex-1"></div>
+        </div>
+
+        <div class="flex items-center gap-8">
+          <div class="flex-1"></div>
+          <div class="timeline-dot flex-shrink-0 z-10" style="background:#6b7280"></div>
+          <div class="flex-1">
+            <div class="timeline-card p-4 max-w-xs" style="border-left-color:#6b7280">
+              <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">2020</span>
+              <h4 class="font-bold text-gray-700 mt-1">Faculty English Training Begins</h4>
+              <p class="text-sm text-gray-500">Faculty &amp; Staff English Training Launched · Selected as KOSEN Thailand Project promotion school</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-8">
+          <div class="flex-1 text-right">
+            <div class="timeline-card p-4 inline-block text-left max-w-xs" style="border-left-color:#6b7280">
+              <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">2021</span>
+              <h4 class="font-bold text-gray-700 mt-1">10-Year Roadmap Formulated</h4>
+              <p class="text-sm text-gray-500">Globalization roadmap created · Selected as host for ISATE 2023 conference</p>
+            </div>
+          </div>
+          <div class="timeline-dot flex-shrink-0 z-10" style="background:#6b7280"></div>
+          <div class="flex-1"></div>
+        </div>
+
+        <div class="flex items-center gap-8">
+          <div class="flex-1"></div>
+          <div class="timeline-dot flex-shrink-0 z-10" style="background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.3)"></div>
+          <div class="flex-1">
+            <div class="timeline-card p-4 max-w-xs" style="border-left-color:#f59e0b">
+              <span class="text-xs font-bold uppercase tracking-wider" style="color:#f59e0b">2024 — Preparation Year</span>
+              <h4 class="font-bold text-gray-700 mt-1">Program Launch</h4>
+              <p class="text-sm text-gray-500">Practical Engineering English &amp; overseas experience programs launched. Generic Skill Test introduced.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-8">
+          <div class="flex-1 text-right">
+            <div class="timeline-card p-4 inline-block text-left max-w-xs" style="border-left-color:#1e8fb5">
+              <span class="text-xs font-bold uppercase tracking-wider" style="color:#1e8fb5">2025 — Full Implementation</span>
+              <h4 class="font-bold text-gray-700 mt-1">All Grades: All 3 Initiatives Active</h4>
+              <p class="text-sm text-gray-500">All courses from Year 1 (Regular) to Year 2 (Advanced) running Initiatives ①②③ simultaneously.</p>
+            </div>
+          </div>
+          <div class="timeline-dot flex-shrink-0 z-10" style="background:#1e8fb5; box-shadow:0 0 0 3px rgba(30,143,181,.3)"></div>
+          <div class="flex-1"></div>
+        </div>
+
+        <div class="flex items-center gap-8">
+          <div class="flex-1"></div>
+          <div class="timeline-dot flex-shrink-0 z-10" style="background:#059669; box-shadow:0 0 0 3px rgba(5,150,105,.3); width:18px; height:18px;"></div>
+          <div class="flex-1">
+            <div class="timeline-card p-4 max-w-xs" style="border-left-color:#059669">
+              <span class="text-xs font-bold uppercase tracking-wider" style="color:#059669">2028 — Goal Achievement</span>
+              <h4 class="font-bold text-gray-700 mt-1">Targets Reached</h4>
+              <p class="text-sm text-gray-500">TOEIC 500pts · 53% overseas experience · 100 student papers · 1.6× faculty English work</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /desktop timeline -->
+
+    <!-- Mobile timeline -->
+    <div class="md:hidden space-y-4">
+      <div class="timeline-card p-4" style="border-left-color:#6b7280">
+        <span class="text-xs font-bold uppercase" style="color:#6b7280">2019</span>
+        <h4 class="font-bold text-gray-700 mt-1 text-sm">GE Basic Foundation Project Adopted</h4>
+        <p class="text-xs text-gray-500">Foundations laid for global engineering program</p>
+      </div>
+      <div class="timeline-card p-4" style="border-left-color:#6b7280">
+        <span class="text-xs font-bold uppercase" style="color:#6b7280">2020</span>
+        <h4 class="font-bold text-gray-700 mt-1 text-sm">Faculty English Training Begins</h4>
+        <p class="text-xs text-gray-500">Faculty English Training · KOSEN Thailand Project promotion school</p>
+      </div>
+      <div class="timeline-card p-4" style="border-left-color:#6b7280">
+        <span class="text-xs font-bold uppercase" style="color:#6b7280">2021</span>
+        <h4 class="font-bold text-gray-700 mt-1 text-sm">10-Year Roadmap Formulated</h4>
+        <p class="text-xs text-gray-500">Globalization roadmap · Selected as ISATE 2023 host</p>
+      </div>
+      <div class="timeline-card p-4" style="border-left-color:#f59e0b">
+        <span class="text-xs font-bold uppercase" style="color:#f59e0b">2024</span>
+        <h4 class="font-bold text-gray-700 mt-1 text-sm">Program Launch (Preparation Year)</h4>
+        <p class="text-xs text-gray-500">Practical Engineering English &amp; overseas programs launched</p>
+      </div>
+      <div class="timeline-card p-4" style="border-left-color:#1e8fb5">
+        <span class="text-xs font-bold uppercase" style="color:#1e8fb5">2025</span>
+        <h4 class="font-bold text-gray-700 mt-1 text-sm">Full Implementation Across All Grades</h4>
+        <p class="text-xs text-gray-500">All 3 initiatives running simultaneously</p>
+      </div>
+      <div class="timeline-card p-4" style="border-left-color:#059669">
+        <span class="text-xs font-bold uppercase" style="color:#059669">2028</span>
+        <h4 class="font-bold text-gray-700 mt-1 text-sm">Goals Achieved</h4>
+        <p class="text-xs text-gray-500">TOEIC 500 · 53% overseas · 100 student papers</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PARTNER INSTITUTIONS ══════════ -->
+<section id="partners" class="py-20 px-4 bg-gray-50 reveal">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <div class="section-line"></div>
+      <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-3">Global Partner Institutions</h2>
+      <p class="text-gray-500">Our Partner Institutions — 8+ countries, building real connections</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="partner-card" style="border-left-color:#dc2626">
+        <div class="text-4xl flex-shrink-0">🇹🇭</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">Thailand</div>
+          <div class="font-bold text-gray-800 text-sm">KOSEN Thailand</div>
+          <div class="text-xs mt-1 font-medium" style="color:#dc2626">Technical College Exchange</div>
+        </div>
+      </div>
+      <div class="partner-card" style="border-left-color:#ea580c">
+        <div class="text-4xl flex-shrink-0">🇸🇬</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">Singapore</div>
+          <div class="font-bold text-gray-800 text-sm">Temasek Polytechnic</div>
+          <div class="text-xs mt-1 font-medium" style="color:#ea580c">Polytechnic Exchange</div>
+        </div>
+      </div>
+      <div class="partner-card" style="border-left-color:#ca8a04">
+        <div class="text-4xl flex-shrink-0">🇹🇼</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">Taiwan</div>
+          <div class="font-bold text-gray-800 text-sm">United University &amp; Dong Hwa University</div>
+          <div class="text-xs mt-1 font-medium" style="color:#ca8a04">University Exchange</div>
+        </div>
+      </div>
+      <div class="partner-card" style="border-left-color:#16a34a">
+        <div class="text-4xl flex-shrink-0">🇩🇪</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">Germany</div>
+          <div class="font-bold text-gray-800 text-sm">TU Darmstadt</div>
+          <div class="text-xs mt-1 font-medium" style="color:#16a34a">Technical University Research</div>
+        </div>
+      </div>
+      <div class="partner-card" style="border-left-color:#2563eb">
+        <div class="text-4xl flex-shrink-0">🇰🇷</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">South Korea</div>
+          <div class="font-bold text-gray-800 text-sm">Yeungjin University</div>
+          <div class="text-xs mt-1 font-medium" style="color:#2563eb">University Exchange</div>
+        </div>
+      </div>
+      <div class="partner-card" style="border-left-color:#7c3aed">
+        <div class="text-4xl flex-shrink-0">🇺🇸</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">USA</div>
+          <div class="font-bold text-gray-800 text-sm">University of Hawaii &amp; Michigan Training</div>
+          <div class="text-xs mt-1 font-medium" style="color:#7c3aed">Training &amp; Exchange</div>
+        </div>
+      </div>
+      <div class="partner-card" style="border-left-color:#0891b2">
+        <div class="text-4xl flex-shrink-0">🇮🇳</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">India</div>
+          <div class="font-bold text-gray-800 text-sm">IIT Madras</div>
+          <div class="text-xs mt-1 font-medium" style="color:#0891b2">Research Collaboration</div>
+        </div>
+      </div>
+      <div class="partner-card" style="border-left-color:#0d9488">
+        <div class="text-4xl flex-shrink-0">🇦🇺</div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">Australia</div>
+          <div class="font-bold text-gray-800 text-sm">Australia Training Program</div>
+          <div class="text-xs mt-1 font-medium" style="color:#0d9488">Immersive Training</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map visual callout -->
+    <div class="mt-10 bg-gradient-to-br from-blue-900 to-cyan-900 rounded-2xl p-8 text-center text-white">
+      <div class="text-5xl mb-4">🌏</div>
+      <h3 class="text-2xl font-black mb-2">From Shimane to the World</h3>
+      <p class="text-blue-200 text-sm max-w-xl mx-auto">
+        Through these partnerships spanning Asia, Europe, and the Americas, Matsue Kosen students gain real-world international experience — building the cross-cultural adaptability that defines a true global engineer.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 mt-6">
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇯🇵 Japan</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇹🇭 Thailand</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇸🇬 Singapore</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇹🇼 Taiwan</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇩🇪 Germany</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇰🇷 South Korea</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇺🇸 USA</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇮🇳 India</span>
+        <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-semibold">🇦🇺 Australia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="py-16 px-4 bg-white reveal">
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="section-line"></div>
+    <h2 class="text-3xl font-black text-gray-800 mb-4">Interested in Global Engineering?</h2>
+    <p class="text-gray-500 mb-8">Discover how Matsue Kosen is shaping the next generation of engineers equipped for a connected world.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="../index.html#contact" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-700 to-cyan-600 text-white px-7 py-3 rounded-full font-bold hover:shadow-lg hover:shadow-blue-500/30 transition-all">
+        <i class="fas fa-envelope"></i> Contact Us
+      </a>
+      <a href="../index.html" class="inline-flex items-center gap-2 border-2 border-blue-200 text-blue-700 px-7 py-3 rounded-full font-bold hover:bg-blue-50 transition-all">
+        <i class="fas fa-home"></i> Back to Homepage
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer (injected by components.js) ── -->
+<div id="footer-placeholder"></div>
+
+<!-- ── Shared component loader ── -->
+<script src="../assets/js/components.js"></script>
+
+<!-- ── Page-specific scripts ── -->
+<script>
+  // KPI bar animation on scroll
+  var kpiObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.kpi-bar-fill').forEach(function(bar) {
+          var w = bar.getAttribute('data-width');
+          setTimeout(function() { bar.style.width = w + '%'; }, 200);
+        });
+        kpiObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  var kpiGrid = document.getElementById('kpi-grid');
+  if (kpiGrid) kpiObserver.observe(kpiGrid);
+</script>
+</body>
+</html>
